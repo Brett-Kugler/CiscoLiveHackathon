@@ -25,6 +25,8 @@ class ListenServer(resource.Resource):
     
     def __init__(self):
         self.activeEvent=False
+        self.plotDataList=[]
+        self.noMoreWrites = False
 
     def render_GET(self, request):
         self.numberRequests += 1
@@ -45,11 +47,11 @@ class ListenServer(resource.Resource):
 
     def evaluateEventTrigger(self, newInput):
         global readingList
-        global pI
+        #global pI
 
         readingList.insert(0,newInput)
         variance=0
-        self.sendToGraph(newInput,pI)
+        self.sendToGraph(newInput,pI=None)
 
         # look at the last 10 readings to determine variance
         if len(readingList)>10:
@@ -77,18 +79,27 @@ class ListenServer(resource.Resource):
         payload = {'quake': str(active)}
         r=requests.get("http://10.10.30.189:3000/quake", params=payload, headers=headers, verify=False, auth=None)
 
-    def sendToGraph(self,val,pI):
-        pI.plotData(val)
+    def sendToGraph(self,data,pI):
+        if len(self.plotDataList)<180:
+            self.plotDataList.append(data)
+        else:
+            if not self.noMoreWrites:
+                self.noMoreWrites=True
+                f=open('datastream.txt','w')
+                for entry in self.plotDataList:
+                    f.write(str(entry)+",")
+                f.close()
+        #pI.plotData(data)
 
 messageCount=0
 readingList=[]
 
 # Enable or Disable this call for requests debug
 doRequestsDebug()
-pI = plotlyInterface.plotlyInterface()
-pI.setup()
-pI.openStream()
+#pI = plotlyInterface.plotlyInterface()
+#pI.setup()
+#pI.openStream()
 print "Starting Web Server"
 reactor.listenTCP(8080, server.Site(ListenServer()))
 reactor.run()
-pI.closeStream()
+#pI.closeStream()
