@@ -3,7 +3,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var parseString = require('xml2js').parseString;
-
+var twiliokeys = require('../secretkeys.js');
+var twilioclient = require('twilio')(twiliokeys.TWILIO_ACCOUNT_SID, twiliokeys.TWILIO_AUTH_TOKEN);
 
 // Type 3: Persistent datastore with automatic loading
 var Datastore = require('nedb')
@@ -241,6 +242,27 @@ router.get('/quake', function (req, res) {
                 function pushContactElements(element, index, array) {
                     smsNumbers.push(element);
 
+                    //send sms here
+                    //Send an SMS text message
+                    twilioclient.sendMessage({
+
+                        to: element.telephone, // Any number Twilio can deliver to
+                        from: '+14154834220', // A number you bought from Twilio and can use for outbound communication
+                        body: 'Earthquake Alert!' // body of the SMS message
+
+                    }, function (err, responseData) { //this function is executed when a response is received from Twilio
+
+                        if (!err) { // "err" is an error received during the request, if any
+
+                            // "responseData" is a JavaScript object containing data received from Twilio.
+                            // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
+                            // http://www.twilio.com/docs/api/rest/sending-sms#example-1
+
+                            console.log(responseData.from); // outputs "+14506667788"
+                            console.log(responseData.body); // outputs "word to your mother."
+
+                        }
+                    });
                 }
                 users.forEach(pushContactElements);
 
