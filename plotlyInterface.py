@@ -14,7 +14,7 @@ class plotlyInterface(object):
         self.s = None
         self.my_stream_id = None
         self.lastUpdate = 0
-
+ 
     def setup(self):
         my_creds = tls.get_credentials_file()                  # read credentials
         py.sign_in(my_creds['username'], my_creds['api_key'])  # (New syntax!) Plotly sign in
@@ -54,8 +54,7 @@ class plotlyInterface(object):
         self.s.open()
 
     def plotData(self,data): 
-
-        if time.time()-self.lastUpdate > 3:
+        if time.time()-self.lastUpdate > 1:
             my_x = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')  # current time!
             my_y = data     # some random numbers
     
@@ -63,6 +62,7 @@ class plotlyInterface(object):
             self.s.write(dict(x=my_x,y=my_y))  # N.B. write to Plotly stream! 
                                             #  Send numbers to append current list.
                                             #  Send list to overwrites existing list (more in 7.2).
+
             self.lastUpdate = time.time()            
         #time.sleep(0.25)  # N.B. plot a point every 80 ms, for smoother plotting
 
