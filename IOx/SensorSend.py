@@ -246,7 +246,7 @@ while (1):
 
         headers={'Accept':'application/json'}
         data={'value':sensor_port0}
-        r=requests.post("http://10.10.30.55:8080/rumble", data=data, headers=headers, verify=False)
+        r=requests.post("http://10.10.30.235:8080/rumble", data=data, headers=headers, verify=False)
 
         # if r.status_code == requests.codes.ok:
         #     print "success sending"
