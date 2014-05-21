@@ -78,6 +78,7 @@ router.get('/findMAC', function (req, res) {
     });
 });
 
+//http://localhost:3000/findUserByMAC?mac=3c:a9:f4:53:2d:cc
 router.get('/findUserByMAC', function (req, res) {
     var macAddress = req.query.mac;
 
@@ -95,39 +96,57 @@ router.get('/findUserContacts', function (req, res) {
     });
 });
 
-//http://localhost:3000/saveUser?username=hc&telephone=4156466297&mac=00:27:10:d3:51:78
+//http://localhost:3000/saveUser?username=hc&telephone=4156466297&mac=3c:a9:f4:53:2d:cc
 router.get('/saveUser', function (req, res) {
     var username = req.query.username;
     var telephone = req.query.telephone;
     var mac = req.query.mac;
 
-    db.insert({'username' : username, 'telephone' : telephone, 'mac' : mac, 'type' : 'user'}, function (err, newDocs) {
-        console.log(newDocs);
-        // Two documents were inserted in the database
-        // newDocs is an array with these documents, augmented with their _id
-        res.json(newDocs);
+    db.find({ 'username': username, 'type': 'user' }, function (err, docs) {
+        if (docs.count > 0) {
+            db.remove({ 'username': username, 'type': 'user' }, { multi: true }, function (err, numRemoved) {
+                db.insert({ 'username': username, 'telephone': telephone, 'mac': mac, 'type': 'user' }, function (err, newDocs) {
+                    console.log(newDocs);
+                    // newDocs is an array with these documents, augmented with their _id
+                    res.json(newDocs);
+                });
+            });
+        } else {
+            db.insert({ 'username': username, 'telephone': telephone, 'mac': mac, 'type': 'user' }, function (err, newDocs) {
+                console.log(newDocs);
+                // newDocs is an array with these documents, augmented with their _id
+                res.json(newDocs);
+            });
+        }
     });
+
+    
 });
 
-//http://localhost:3000/saveUserContacts?username=hc&contactname=Harvey&telephone=4156466298&email=harvey@harveychan.net
+//http://localhost:3000/saveUserContacts?username=hc&contactname1=Harvey&telephone1=4156466298&email1=harvey@harveychan.net&contactname2=Harvey2&telephone2=4156466299&email2=harvey2@harveychan.net
 router.get('/saveUserContacts', function (req, res) {
     var username = req.query.username;
-    var contactname = req.query.contactname;
-    var telephone = req.query.telephone;
-    var email = req.query.email;
+    var contactname1 = req.query.contactname1;
+    var telephone1 = req.query.telephone1;
+    var email1 = req.query.email1;
+    var contactname2 = req.query.contactname2;
+    var telephone2 = req.query.telephone2;
+    var email2 = req.query.email2;
 
-    db.insert({ 'username': username, 'contactname': contactname, 'telephone': telephone, 'email': email, 'type': 'contact' }, function (err, newDocs) {
-        console.log(newDocs);
-        // Two documents were inserted in the database
-        // newDocs is an array with these documents, augmented with their _id
-        res.json(newDocs);
+    db.remove({ 'username': username, 'type': 'contact' }, { multi: true }, function (err, numRemoved) {
+        db.insert([{ 'username': username, 'contactname': contactname1, 'telephone': telephone1, 'email': email1, 'type': 'contact' }, { 'username': username, 'contactname': contactname2, 'telephone': telephone2, 'email': email2, 'type': 'contact' }], function (err, newDocs) {
+            console.log(newDocs);
+            // newDocs is an array with these documents, augmented with their _id
+            res.json(newDocs);
+        });
     });
 });
 
+//http://localhost:3000/quake?quake=true
 router.get('/quake', function (req, res) {
     var isQuake = req.query.quake;
     //var cmxUserInfo;
-    if (!isQuake) {
+    if (isQuake == 'False') {
         res.end('{"quake":' + isQuake + '}');
     }
 
