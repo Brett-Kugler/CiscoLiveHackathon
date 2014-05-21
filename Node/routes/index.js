@@ -11,24 +11,6 @@ var Datastore = require('nedb')
   , db = new Datastore({ filename: './database', autoload: true });
 // You can issue commands right away
 
-/* GET home page. */
-//router.get('/', function(req, res) {
-//    res.render('index', { title: 'Express' });
-//});
-
-//router.get('/test', function (req, res) {
-//    res.end('{"success":"true"}');
-//});
-
-//router.get('/insertTestEvent', function (req, res) {
-//    db.insert(req.query, function (err, newDocs) {
-//        console.log(newDocs);
-//        // Two documents were inserted in the database
-//        // newDocs is an array with these documents, augmented with their _id
-//    });
-
-//    res.end('{"success":"true"}');
-//});
 
 router.get('/dropDB', function (req, res) {
 
@@ -47,20 +29,6 @@ router.get('/dropDB', function (req, res) {
 
 });
 
-router.get('/countTempEvent', function (req, res) {
-
-    //// Count all documents in the datastore
-    //db.count({}, function (err, count) {
-    //    // count equals to 4
-    //});
-
-    // Count all documents in the datastore
-    db.count({}, function (err, count) {
-        res.end('{"count":' + count + '}');
-    });
-
-});
-
 router.get('/showDB', function (req, res) {
 
     //// Find all documents in the collection
@@ -72,64 +40,6 @@ router.get('/showDB', function (req, res) {
         res.json(docs);
     });
 
-});
-
-router.get('/testCMX', function (req, res) {
-    //var macAddress = req.query.mac;
-    
-    //https://10.10.20.21/api/contextaware/v1/location/clients/
-
-    request.get({
-        uri: 'https://10.10.20.21/api/contextaware/v1/location/clients/',
-        auth: {
-            user: 'devuser',
-            pass: 'devuser',
-            sendImmediately: true
-        }
-        //headers: { Authorization: 'token ' + req.session.access_token }
-    }, function (e, r, body) {
-        try {
-            console.log(body);
-            res.end(body);
-        } catch (e) {
-            console.log("error: " + e);
-            res.end('{"success":"false"}');
-        }
-    });
-});
-
-router.get('/testParseCMX', function (req, res) {
-    //var macAddress = req.query.mac;
-
-    //https://10.10.20.21/api/contextaware/v1/location/clients/
-
-    request.get({
-        uri: 'https://10.10.20.21/api/contextaware/v1/location/clients/',
-        auth: {
-            user: 'devuser',
-            pass: 'devuser',
-            sendImmediately: true
-        }
-        //headers: { Authorization: 'token ' + req.session.access_token }
-    }, function (e, r, body) {
-        try {
-
-            //var xml = "<root>Hello xml2js!</root>"
-            //parseString(xml, function (err, result) {
-            //    console.dir(result);
-            //});
-
-            parseString(body, function (err, result) {
-                console.log(result);
-
-                res.json(result);
-                //res.json(JSON.parse(result));
-            });
-        } catch (e) {
-            console.log("error: " + e);
-            res.end('{"success":"false"}');
-        }
-    });
 });
 
 //http://localhost:3000/findMAC?mac=3c:a9:f4:53:2d:cc
