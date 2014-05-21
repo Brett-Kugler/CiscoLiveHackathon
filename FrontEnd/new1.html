@@ -3,7 +3,15 @@
 <head>
 	<title>CONTACTS</title>
 	<link type="text/css" rel="stylesheet" href="style.css"/>
-	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function submitContactInfo() {
+            //http://localhost:3000/saveUserContacts?username=hc&contactname1=Harvey&telephone1=4156466298&email1=harvey@harveychan.net&contactname2=Harvey2&telephone2=4156466299&email2=harvey2@harveychan.net
+            $.get("/saveUserContacts?username=" + $("#userName").val() + "&contactname1=" + $("#contact1Name").val() + "&telephone1=" + $("#contact1Phone").val() + "&email1=" + $("#contact1Email").val() + "&contactname2=" + $("#contact2Name").val() + "&telephone2=" + $("#contact2Phone").val() + "&email2=" + $("#contact2Email").val(), function (data) {
+                alert("Contact Info saved");
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -11,6 +19,7 @@
 		<img src="eee.png">
 		
 		<div class="topLinks">
+			<a href="index.html">HOME</a>
 			<a href="profile.html">PROFILE</a>
 			<a href="new1.html">CONTACTS</a>
 		</div>
@@ -18,12 +27,13 @@
 	
 	<div id="navMenu">
 	<nav id="menu">
-		<p id="label" style= "margin-bottom: 0.5em">Contacts</p>
+		<p id="label" style= "margin-bottom: 0.2em">Emergency Contacts</p>
+		<hr id="titleLine">
         <ul class="parent-menu">
-            <li><a href="#">LEVEL 1</a>
+            <li><center><a href="#">LEVEL 1</a></center>
             </li>
-            <li><a href="#">LEVEL 2</a></li>
-            <li><a href="#">LEVEL 3</a>
+            <li><center><a href="#">LEVEL 2</a></center></li>
+            <li><center><a href="#">LEVEL 3</a></center>
 			</li>
         </ul>
     </nav>
@@ -31,13 +41,13 @@
 		<div class="scrollCont">		
 			<div id="contact1"class="contactInput">
 			<p>Name:</p>
-			<input id="contact1Name"class="textbox"type="text">
+			<input id="contact1Name"class="textbox"type="text" value="Mom">
 			<p>Telephone:</p>
-			<input id="contact1Phone" class="textbox"type="text">
+			<input id="contact1Phone" class="textbox"type="text" value="4154834114">
 			<p>E-mail:</p>
-			<input id="contact1Email" class="textbox"type="text">
+			<input id="contact1Email" class="textbox"type="text" value="mom@harveychan.net">
 			
-			<a href="#" class="saveButton">SAVE</a>
+			<a href="#" class="saveButton" onclick="submitContactInfo()">SAVE</a>
 			<hr>
 			</div>	
 			
@@ -45,18 +55,33 @@
 		
 			<div id="contact2"class="contactInput">
 			<p>Name:</p>
-			<input id="contact2Name"class="textbox"type="text">
+			<input id="contact2Name"class="textbox"type="text" value="Dad">
 			<p>Telephone:</p>
-			<input id="contact2Phone" class="textbox"type="text">
+			<input id="contact2Phone" class="textbox"type="text" value="4154834114">
 			<p>E-mail:</p>
-			<input id="contact2Email" class="textbox"type="text">
+			<input id="contact2Email" class="textbox"type="text" value="dad@harveychan.net">
 
-			<a href="#" class="saveButton">SAVE</a>
+			<a href="#" class="saveButton" onclick="submitContactInfo()">SAVE</a>
 			</div>
 		
 		</div>
 		
 	</div>
+	
+
 
 </body>
+
+<div id="foot">
+	<center>
+	<div class="bottomLinks">
+			
+			<a href="index.html">About Us</a>
+			<a href="profile.html">Community</a>
+			<a href="new1.html">Education</a>
+			<a >(c) Copyright Klaxxon, 2014</a>
+	</div>
+	</center>
+
+</div>
 </html>

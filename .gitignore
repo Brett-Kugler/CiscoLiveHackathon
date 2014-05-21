@@ -1,3 +1,6 @@
 *.pyproj
 *.pyc
 /obj
+/Node/secretkeys.js
+/Node/database
+node_modules

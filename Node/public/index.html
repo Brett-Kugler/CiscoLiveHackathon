@@ -1,22 +1,124 @@
 <!DOCTYPE html> 
 <html>
+<div id="wrap">
 <head>
 	<title>EEE</title>
 	<link type="text/css" rel="stylesheet" href="style.css"/>
+	
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'Cisco CGR 1120 - Sensor Readings'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' :
+                    'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'datetime',
+                minRange: 2 * 24 * 3600 
+            },
+            yAxis: {
+                title: {
+                    text: 'Vibrations From Sensor'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+    
+            series: [{
+                type: 'area',
+                name: ' ',
+                pointInterval: 1 * 3600 * 20,
+                pointStart: Date.UTC(2014, 04, 21),
+                data: [
+						493,493,493,493,493,493,493,493,493,493,493,493,493,493,493,493,493,493,493,493,493,
+						493,493,455,476,443,443,447,458,491,492,491,451,398,398,488,488,498,498,498,498,498,
+						498,99,259,222,412,204,87,87,198,225,209,237,256,348,62,97,301,184,270,168,230,350,272,
+						250,304,272,194,17,74,112,209,409,509,509,509,509,509,509,509,509,509,509,509,509,509,509,
+						509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,509,
+						509,509,47,371,155,333,441,248,231,0,0,0,34,34,323,443,180,241,266,304,268,376,464,261,253,0,
+						126,165,347,485,500,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,
+						505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505,505
+					]
+            }]
+        });
+    });
+    
+
+		</script>
+		
+	<h1>
+		<img src="eee.png">
+		
+		<div class="topLinks">
+			<a href="profile.html">HOME</a>
+			<a href="profile.html">PROFILE</a>
+			<a href="new1.html">CONTACTS</a>
+		</div>
+	</h1>
+	
 </head>
 
 <body>
 	
-	<h1>
-		<img src="eee.png">
-	</h1>
 
 	<div id="navMenu">
+		<center>
+		<p id="label" style= "margin-bottom: 0.5em">Sensor Data</p>
+		</center>
+		<hr id="titleLine">
 
-		<p id="label" style= "margin-bottom: 0.5em">Quake Sensor Data</p>
-        <div style="width:840px; height:220px; border: 1px solid #000000">
-			
+        <div style="width:840px; height:400px; border: 0px solid #868686">
+
+			<script src="highcharts.js"></script>
+			<script src="exporting.js"></script>
+
+			<div id="container" style="z-index:1; min-width: 310px; height: 300px; margin: 0 auto"></div>
+		</div>	
 		</div>
 
 </body>
+
+<div id="foot">
+	<center>
+	<div class="bottomLinks">
+			
+			<a href="index.html">About Us</a>
+			<a href="profile.html">Community</a>
+			<a href="new1.html">Education</a>
+			<a >(c) Copyright Klaxxon, 2014</a>
+	</div>
+	</center>
+</div>
+
+</div>
 </html>
