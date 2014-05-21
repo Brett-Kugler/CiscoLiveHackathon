@@ -306,7 +306,7 @@ function sendSMS(cmxUserInfo, user) {
 
         to: user.telephone, // Any number Twilio can deliver to
         from: '+14154834220', // A number you bought from Twilio and can use for outbound communication
-        body: 'Earthquake Alert! The last known location of ' + user.username + ' is here: ' + 'https://www.google.com/maps/?saddr=' + cmxUserInfo.GeoCoordinate[0].$.lattitude + ',' + cmxUserInfo.GeoCoordinate[0].$.longitude // body of the SMS message
+        body: 'Earthquake Alert! The last known location of ' + user.username + ' is here: ' + 'http://maps.googleapis.com/maps/api/staticmap?size=480x480&markers=icon:http://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=pin%257C996600%7C' + cmxUserInfo.GeoCoordinate[0].$.lattitude + ',' + cmxUserInfo.GeoCoordinate[0].$.longitude + '&sensor=false' // body of the SMS message
 
     }, function (err, responseData) { //this function is executed when a response is received from Twilio
 
