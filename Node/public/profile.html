@@ -6,7 +6,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript">
         function submitUserInfo() {
-            //http://localhost:3000/saveUser?username=hc&telephone=4156466297&mac=3c:a9:f4:53:2d:cc
+            //http://localhost:3000/saveUser?username=hc&telephone=1234567890&mac=3c:a9:f4:53:2d:cc
             $.get("/saveUser?username=" + $("#userName").val() + "&telephone=" + $("#userPhone").val() + "&mac=" + $("#userMac").val(), function (data) {
                 alert("User Info saved");
             });
@@ -36,7 +36,7 @@
 			<p>Name:</p>
 			<input id="userName" class="textbox"type="text" value="Harvey">
 			<p>Telephone:</p>
-			<input id="userPhone" class="textbox"type="text" value="4156466297">
+			<input id="userPhone" class="textbox"type="text" value="1234567890">
 			<p>MAC Address:</p>
 			<input id="userMac" class="textbox"type="text" value="3c:a9:f4:53:2d:cc">
 			</div>	
